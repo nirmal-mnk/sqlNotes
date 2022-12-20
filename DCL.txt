@@ -1,0 +1,33 @@
+DCL
+
+Data Control Lanaguage. It is maincoming used by ADMIN people.
+It is used to create a new user and grant him all the previllages needed for login.
+In order to execute DCL commands, we should need adminstrator previllage.
+
+commands used under DCL are
+1. Create User
+2. Grant previllages
+3. Drop User
+
+All the user related information will be saved under a table called DBA_USERS;
+
+WHAT IS CALLED META DATA?
+META Data is data about the data.
+
+how to login as SYSDBA?
+Open a command prompt and type SQLPLUS / as sysdba
+
+select * from tab; - to view all the list of tables
+
+desc dba_users; 
+
+select username, account_status from dba_users; - to see the list of all users
+
+create user bharani identified by bharani; - This will create new user
+
+grant connect, resource, dba to bharani; - providing admin rights to the user for login
+
+grant create session to bharani; - previllage given to create table and other transactions
+
+
+

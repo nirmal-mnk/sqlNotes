@@ -1,0 +1,141 @@
+
+Merge:It is used to perform any 2 dml operations. It can be either insert or delete (insert or update).
+Syntax:
+merge into targettable using othertable on (joining criteria)
+when matched then update set columnlist
+when not matched then insert/update  
+
+
+
+create table catalog1 (id number(3), item varchar2 (20), price number(6));
+insert into catalog1 values(1, 'laptop', 800);
+insert into catalog1 values(2, 'iphone', 500);
+insert into catalog1 values(3, 'camera', 700);
+
+select * from catalog1;
+
+create table catalog2 (id number(3), item varchar2 (20), price number(6));
+
+insert into catalog2 values(1, 'laptop', 899);
+insert into catalog2 values(2, 'iphone', 599);
+insert into catalog2 values(5, 'video camera', 799);
+
+select * from catalog2;
+
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+WHEN NOT MATCHED THEN INSERT (id, item, price) values (s2.id, s2.item, s2.price);
+
+select * from catalog1;
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+delete where s1.id=s2.id;
+
+
+
+Views in oracle:
+An oracle view is  a virtual table tat doesn't physically exist other than it is created by a query  or join query 
+
+
+
+Syntax:
+create view viewname as 
+(select query)
+
+
+create view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+
+create table catalog1 (id number(3), item varchar2 (20), price number(6));
+insert into catalog1 values(1, 'laptop', 800);
+insert into catalog1 values(2, 'iphone', 500);
+insert into catalog1 values(3, 'camera', 700);
+select * from catalog1;
+create table catalog2 (id number(3), item varchar2 (20), price number(6));
+
+insert into catalog2 values(1, 'laptop', 899);
+insert into catalog2 values(2, 'iphone', 599);
+insert into catalog2 values(5, 'video camera', 799);
+
+select * from catalog2;
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+WHEN NOT MATCHED THEN INSERT (id, item, price) values (s2.id, s2.item, s2.price);
+
+select * from catalog1;
+select * from catalog2;
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+delete where s1.id=s2.id;
+select * from catalog1;
+select * from catalog2;
+
+merge into catalog2 s2 using catalog1 s1 on (s2.id=s1.id)
+when matched then update set s2.price=s1.price
+delete where s2.id=s1.id;
+
+select * from catalog2;
+select * from catalog1;
+
+
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+
+create view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+select * from emp_dept_details;
+
+create  or replace view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id
+where a.department_id>50;
+
+select * from emp_dept_details;
+
+
+create  or replace view emp_dept_details_2
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id
+where a.department_id>50;
+
+select * from emp_dept_details_2;
+
+drop view emp_dept_details_2;
+
+
+
+
+

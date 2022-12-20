@@ -1,0 +1,1454 @@
+
+
+SQL commands
+
+1.DDL-data definition language
+2.DML-data manipulation language
+3.TCL-transaction control language
+4.DCL-data control language
+
+
+DDL:
+commands avalaible under DDL are
+1.create,2.alter,3.drop,4.truncate,5.desc
+
+create: create command is used to create a table in oracle
+syntax for create table
+
+CREATE TABLE table_name
+(
+column1 datatype[NULL/notnull],
+column2 datatype[NULL/notnull]
+)
+
+create table customers
+(customer_id number(10) not null,
+customer_name varchar2(50) not null,
+city varchar2(50)
+);
+insert into customers values(1,'surya','vpm');
+insert into customers values(1,'suryaa','vpam');
+insert into customers values(1,'surya','vpm');
+select * from customers
+  from the above table we can able to see same customer id inserted multiple times
+inorder to avoid the problem we need a primary key in our table
+Difference way of creating primary key
+create table customers1
+(customer_id number(10) primary key,
+customer_name varchar2(50) not null,
+city varchar2(50)
+);
+insert into customers1 values(1,'surya','vpm');
+insert into customers1 values(1,'suryaa','vpam');
+insert into customers1 values(1,'surya','vpm');
+Error report -
+ORA-00001: unique constraint (HR.SYS_C007074) violated
+
+
+how to create a foreign key and what is the usage of it
+
+CREATE TABLE table_name
+(
+  column1 datatype null/not null,
+  column2 datatype null/not null,
+  ...
+
+  CONSTRAINT fk_column
+    FOREIGN KEY (column1, column2, ... column_n)
+    REFERENCES parent_table (column1, column2, ... column_n)
+);
+
+CREATE TABLE supplier
+( supplier_id numeric(10) not null,
+  supplier_name varchar2(50) not null,
+  contact_name varchar2(50),
+  CONSTRAINT supplier_pk PRIMARY KEY (supplier_id)
+);
+insert into supplier values(1,'surya','harish');
+insert into supplier values(2,'sds','harish');
+insert into supplier values(3,'surya','harish');
+CREATE TABLE products1
+( product_id numeric(10) not null,
+  supplier_id numeric(10) not null,
+  CONSTRAINT fk_supplier
+    FOREIGN KEY (supplier_id)
+    REFERENCES supplier1(supplier_id)
+);
+insert into products1 values(1,2)
+
+
+DEFAULT CONSTRAINT
+
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25) ,
+   SALARY   DECIMAL (18, 2) DEFAULT 5000.00,       
+   PRIMARY KEY (ID)
+);
+insert into customers2 values(1,'surya',22,'hdhiadhu',20000);
+insert into customers2 values(2,'sua',23,'hhiadhu',2000);
+
+insert into customers2 (ID,name,age)values(3,'harish',50);
+
+CHECK CONSTRAINT
+
+CREATE TABLE suppliers4
+(
+  supplier_id numeric(4),
+  supplier_name varchar2(50),
+  CONSTRAINT check_supplier_id
+  CHECK (supplier_id BETWEEN 100 and 9999)
+);
+
+insert into suppliers4 values(103,'surya');
+insert into suppliers4 values(55,'surya');
+
+UNIQUE CONSTRAINT
+
+CREATE TABLE supplier6
+( supplier_id numeric(10) NOT NULL,
+  supplier_name varchar2(50) NOT NULL,
+  contact_name varchar2(50),
+  CONSTRAINT supplier_unique UNIQUE (supplier_id, supplier_name)
+);
+insert into supplier6 values(1,'surya','harish');
+insert into supplier6 values(1,'hari','harish');
+insert into supplier6 values(1,'surya','harish');
+
+HOW TO CREATE A TABLE FROM THE EXISTING TABLE 
+WITHOUT DATA
+create table abc as select * from supplier6 where 1=2;
+
+WITH DATA
+create table abcd as select * from supplier6 where 1=1;
+select * from abcd;
+
+TRUNCATE
+   Truncate will delete all the records inside the table after truncate table will remains and we cannot able to bring back the table
+
+SYNTAX
+ Truncate Table Tablename
+
+Truncate table abcd
+
+DROP
+   Drop will delete both record as well as table 
+syntax
+  drop table tablename
+
+ALTER command
+	alter command is used to modife the table existing table strecture
+
+1.we can add a new column
+SYNTAX
+	alter table tablename add columnname datatype
+example
+	alter table suppliers4 add supplierphone varchar2(20);
+Syntax for adding multiple columns
+	alter table tablename add(column1 datatype,column2 datatype)
+example
+	alter table suppliers4 add(supplierlocation varchar2(20),supplierage number(3));
+2.we can delete the existing column
+Syntax
+	alter table tablename drop column columnname
+example
+	alter table suppliers4 drop column supplierage;
+3.we can modife the existing datatype length
+Syntax
+	alter table tablename modify columnname datatype
+example
+	alter table suppliers4 modify supplierlocation varchar2(30);
+4.we can add a constain or drop a constain
+Syntax
+	alter table tablename drop constraint constraintname
+example
+	alter table suppliers4 drop constraint check_supplier_id;
+ADD
+Syntax
+	alter table tablename add constraint constraintname
+example
+	alter table suppliers4 add constraint check_supplier_id CHECK (supplier_id BETWEEN 100 and 9999);
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DML
+	Data Manipulation Language
+the commands under DML are
+	select, update, delete, insert, merge
+Select
+	Select is used to select the record from table
+	different usage of select
+Operators:
+Arithmetical: to perform mathemeatical operations
+create table maths
+(
+num1 number(3),
+num2 number(3)
+);
+
+
+insert into maths
+values (15,12);
+
+
+insert into maths
+values (2,8);
+
+
+insert into maths
+values (31,7);
+
+Arithmetic opeartor:
+select num1,num2, num1+num2 from maths;
+select num1, num2, num1-num2 from maths;
+select num1, num2, num1*num2 from maths;
+select num1, num2, num1/num2 from maths;
+
+
+
+Comparison:
+select employee_id,salary,department_id from employees where department_id=50;
+
+select employee_id,salary,department_id from employees where department_id<>50;
+
+select employee_id,salary,department_id from employees where department_id!=50;
+
+select employee_id,salary,department_id from employees where department_id^=50;
+
+select employee_id,salary,department_id from employees where department_id>50;
+
+select employee_id,salary,department_id from employees where department_id>=50;
+
+select employee_id,salary,department_id from employees where department_id<=50;
+select employee_id,salary,department_id from employees where department_id<50;
+
+
+select employee_id,salary,department_id from employees where department_id in (50,60,70);
+
+select employee_id,salary,department_id from employees where department_id not in(50,60,70);
+select employee_id,salary,department_id from employees where department_id between 50 and 70;
+select employee_id,salary,department_id from employees where department_id not between 50 and 70;
+select employee_id,salary,department_id from employees where department_id>= all(100);
+select employee_id,salary,department_id from employees where department_id is null;
+select employee_id,salary,department_id from employees where department_id is not null;
+select employee_id,salary,department_id from employees where department_id in (50,60,70) order by department_id desc;
+
+Character operator:
+select employee_id,first_name,last_name,first_name||'-'||last_name from employees;
+select employee_id,first_name,last_name,first_name||'-'||last_name||' and his managerid='||manager_id from employees;
+select employee_id,first_name,last_name,first_name||'-'||last_name||' and his managerid='||manager_id||'and salary='||salary from employees;
+
+Logical Operator:
+and  or not
+
+select * from employees where salary>10000 and commission_pct is not null;
+select * from employees where salary>10000 or commission_pct is null;
+select employee_id,salary,department_id from employees where department_id not between 50 and 70;
+select employee_id,salary,department_id from employees where department_id not in(50,60,70);
+
+
+Set Operators:
+union union all intersect minus
+union: returns all the distict row selected by either query
+union all returns all the selected rows by either query, includes all duplicates
+intersect returs all the distinct rows selected by both the queries
+minus returns all the distinct rows selected by the first query but not the second one
+syntax:
+query1 
+union/union all/intersect/minus
+query2
+points to remember
+in both query 1 and query2 no of columns should remains same
+and datatypes should match for all the columns
+create table a
+(
+column1 number(3),
+column2  number(3),
+column3  number(3)
+);
+
+
+
+create table b
+(
+column1 number(3),
+column2  number(3),
+column3  number(3)
+);
+
+
+insert into a values(1,2,3);
+insert into b values(1,2,3);
+insert into a values(1,2,4);
+insert into b values(1,2,7);
+insert into a values(2,2,7);
+insert into b values(2,3,7);
+insert into a values(17,2,5);
+
+
+select column1 from a
+union
+select column1 from b
+;
+
+
+select column1 from a
+union all
+select column1 from b
+;
+select column1 from a
+intersect
+select column1 from b
+;
+select column1 from a
+minus
+select column1 from b
+;
+select column1 from b
+minus
+select column1 from a
+;
+
+
+
+select column1,column2 from a
+union
+select column1,column2 from b
+;
+
+
+select column1,column2 from a
+union all
+select column1,column2 from b
+;
+select column1,column2 from a
+intersect
+select column1,column2 from b
+;
+select column1,column2 from a
+minus
+select column1,column2 from b
+;
+select column1,column2 from b
+minus
+select column1,column2 from a
+;
+select column1,column2 from b
+minus
+select column1,column2 from a
+;
+
+
+
+select column1,column2,column3 from a
+union
+select column1,column2,column3 from b
+;
+
+
+select column1,column2,column3 from a
+union all
+select column1,column2,column3 from b
+;
+select column1,column2,column3 from a
+intersect
+select column1,column2,column3 from b
+;
+select column1,column2,column3 from a
+minus
+select column1,column2,column3 from b
+;
+
+select column1,column2,column3 from b
+minus
+select column1,column2,column3 from a
+;
+
+wild card operator:
+select * from employees where first_name like'A%'
+
+select * from employees where first_name like '%a%'
+
+select * from employees where first_name like '%A'
+
+select * from employees where first_name like 'A_a%'
+
+case statement:
+syntax :case when expression then result  
+when  expression then result 
+when  expression    then result 
+
+when  expression then result 
+
+else result 
+
+
+end
+
+select employee_id, department_id,salary,
+case when department_id=10 then salary+(salary*0.5)
+when department_id=20 then salary+(salary*0.25)
+when department_id=30 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end as newsalary
+from employees;
+
+
+select employee_id, department_id,salary,
+case when department_id between 10 and 50 then salary+(salary*0.5)
+when department_id between 51 and 80 then salary+(salary*0.25)
+when department_id between 81 and 100 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end as newsalary
+from employees;
+
+
+
+select employee_id, department_id,salary,
+case when employee_id between 100 and 110 then salary+(salary*0.5)
+when employee_id between 111 and 120 then salary+(salary*0.25)
+when employee_id between 121 and 130 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end as newsalary
+from employees;
+
+
+
+nested case statements:case inside case
+select employee_id,department_id,job_id, salary, 
+case when department_id=90 then 
+        case when job_id='AD_PRES' then salary+(salary*0.5)
+        when job_id='AD_VP' then salary+(salary*0.25)
+        else salary+(salary*0.10)
+        end 
+    when department_id=100 then
+        case when job_id='FI_MGR' then salary+(salary*0.5)
+        when job_id='FI_ACCOUNT' then salary+(salary*0.25)
+        else salary+(salary*0.20)
+        end
+    when department_id=30 then
+         case when job_id='PU_MAN' then salary+(salary*0.5)
+         when job_id='PU_CLERK' then salary+(salary*0.25)
+         else salary+(salary*0.30)
+         end
+else salary+(salary*0.20)
+end as newsalary
+from employees;
+
+
+
+
+select employee_id,department_id,job_id, salary, 
+case when department_id=90 then 
+    case when job_id='AD_PRES' then salary+(salary*0.5)
+        when job_id='AD_VP' then salary+(salary*0.25)
+        else salary+(salary*0.10)
+        end 
+    when department_id=100 then
+        case when job_id='FI_MGR' then salary+(salary*0.5)
+        when job_id='FI_ACCOUNT' then salary+(salary*0.25)
+        else salary+(salary*0.20)
+        end
+    when department_id=30 then
+         case when job_id='PU_MAN' then salary+(salary*0.5)
+         when job_id='PU_CLERK' then salary+(salary*0.25)
+         else salary+(salary*0.30)
+         end
+
+functions
+user defined created by user
+predefined it has two types
+single and (multi row functions or aggregate functions)
+aggregate :
+max min avg count sum stddev 
+
+select max(salary) from employees;
+
+select min(salary) from employees;
+
+select sum(salary) from employees;
+
+select avg(salary) from employees;
+
+select count(*) from employees;
+
+select max(salary),min(salary),avg(salary),count(salary),sum(salary),stddev(salary) from employees;
+
+select department_id, max(salary),min(salary),avg(salary),count(salary),sum(salary),stddev(salary) from employees group by department_id;
+
+
+string functions: 
+select employee_id, first_name,upper(first_name),lower(first_name),initcap(first_name)from employees;
+
+
+select employee_id,first_name,substr(first_name,2,3),instr(first_name,'a') from employees;
+
+select employee_id,first_name,last_name,concat(first_name,last_name) from employees;
+
+select employee_id,first_name,last_name,concat(first_name,concat('-', last_name)) from employees;
+
+
+
+select employee_id,salary, lpad(salary,10,'0'), rpad(salary,10,'0') from employees;
+
+
+select ltrim('   good   '),rtrim('  good  '), trim('   good   ') from dual;
+
+select employee_id,first_name,length(first_name) from employees;
+
+
+Numeric functions:
+absolute,floor
+select abs (-52),abs (620),abs (-982) from dual;
+
+select floor (-52.000),floor (620.0584),floor (-982.288) from dual;
+select ceil (-52.000),ceil (620.0584),ceil (-982.288) from dual;
+-5 -4 -3 -2 -1 0 1 2 3 4 5
+
+select trunc(12.8574,2), trunc(582.03255,2),trunc(58423.25884,3),trunc(58423.147,1) from dual;
+
+select round(12.8574,2), round(582.03255,2),round(58423.25884,3),round(58423.147,1) from dual;
+
+
+select round(12.8574,-2), round(582.03255,-2),round(58423.25884,-3),round(58423.147,-1) from dual;
+
+date functions:
+select sysdate, current_timestamp from dual;
+select extract(day from current_timestamp) from dual;
+
+
+select next_day(sysdate,'sunday') from dual;
+
+
+
+select hire_date,months_between(sysdate,hire_date) from employees;
+
+
+select hire_date,months_between(sysdate,hire_date)/12 from employees;
+
+
+select last_day(sysdate) from dual;
+
+
+select sysdate,add_months(sysdate,5) from dual;
+
+select round(sysdate-100,'year'), round(sysdate,'year') from dual;
+
+select round(sysdate-100,'Q'), round(sysdate,'Q') from dual;
+
+select round(sysdate-100,'month'), round(sysdate,'month') from dual;
+
+
+Converstion Function:
+
+CREATE TABLE members (
+    member_id NUMBER(3),
+    first_name VARCHAR2 ( 50 ) NOT NULL,
+    last_name VARCHAR2 ( 50 ) NOT NULL,
+    joined_date DATE NOT NULL,
+    PRIMARY KEY ( member_id ) 
+);
+
+
+INSERT INTO members(member_id,first_name, last_name, joined_date)
+VALUES(123,'Laureen','Davidson', TO_DATE('Feb 01 2017','Mon DD YYYY'));
+
+
+INSERT INTO members(member_id,first_name, last_name, joined_date)
+VALUES(124,'Thomas','Phelps', TO_DATE('15 March 2017','DD Month YYYY'));
+
+
+
+INSERT INTO members(member_id,first_name, last_name, joined_date)
+VALUES(125,'Thomas','Phelps', TO_DATE('15 September 2017','DD Month YYYY'));
+
+SELECT
+  *
+FROM
+  members;
+  
+  
+select member_id,joined_date, to_char(joined_date, 'DD Month YYYY') from members;
+
+select member_id,joined_date, to_char(joined_date, 'DD-MM-YYYY') from members;
+
+select member_id,joined_date, to_char(joined_date, 'DD-Mon-YY') from members;
+
+
+select member_id,joined_date, to_char(joined_date, 'DDMMYY') from members;
+
+
+select member_id,joined_date, to_char(joined_date, 'Q') from members;
+
+select member_id,joined_date, to_char(joined_date,'DDD') from members;
+
+select member_id,joined_date, to_char(joined_date,'DD') from members;
+
+
+select member_id,joined_date, to_char(joined_date,'RM') from members;
+
+select member_id,joined_date, to_char(joined_date,'W') from members;
+
+
+select member_id,joined_date, to_char(joined_date,'IW') from members;
+
+
+select member_id,joined_date, to_char(joined_date,'D') from members;
+
+
+select member_id,joined_date, to_char(joined_date,'DY') from members;
+
+select member_id,joined_date, to_char(joined_date,'J') from members;
+
+
+
+Rank vs dense_rank
+select employee_ID,salary from employees;
+
+Syntax:
+
+Rank() over (partition by column list order by column list asc/desc)--partition by is optional
+Dense_Rank() over (partition by column list order by column list asc/desc)--partition by is optional
+Row_number() over (partition by column list order by column list asc/desc)--partition by is optional
+
+select employee_id,salary, rank() over(order by salary desc) from employees;
+
+select employee_id,salary, rank() over(order by salary desc),dense_rank() over(order by salary desc) from employees;
+
+select employee_id,salary, rank() over(order by salary asc),dense_rank() over(order by salary asc) from employees;
+
+select employee_id,department_id,salary, rank() over(partition by department_id order by salary desc) rnk_over,
+dense_rank() over(partition by department_id order by salary desc) dens_rnk,
+row_number() over(partition by department_id order by salary desc) rownumber
+from employees
+
+select a.employee_ID,a.department_ID,a.salary from(select employee_id,department_id,salary, rank() over(partition by department_id order by salary desc) rnk_over,
+dense_rank() over(partition by department_id order by salary desc) dens_rnk,
+row_number() over(partition by department_id order by salary desc) rownumber
+from employees)a
+where a.dens_rnk=1
+
+select Harish.* from(select employee_id,department_id,salary, rank() over(partition by department_id order by salary desc) rnk_over,
+dense_rank() over(partition by department_id order by salary desc) dens_rnk,
+row_number() over(partition by department_id order by salary desc) rownumber
+from employees)Harish
+
+select Harish.employee_ID,Harish.department_ID,Harish.salary from(select employee_id,department_id,salary, rank() over(partition by department_id order by salary desc) rnk_over,
+dense_rank() over(partition by department_id order by salary desc) dens_rnk,
+row_number() over(partition by department_id order by salary desc) rownumber
+from employees)Harish
+where Harish.dens_rnk=1;
+
+select Harish.employee_ID,Harish.department_ID,Harish.salary from(select employee_id,department_id,salary, rank() over(partition by department_id order by salary asc) rnk_over,
+dense_rank() over(partition by department_id order by salary asc) dens_rnk,
+row_number() over(partition by department_id order by salary asc) rownumber
+from employees)Harish
+where Harish.dens_rnk=1;
+
+select Harish.employee_ID,Harish.department_ID,Harish.salary,'max salary'as a from(select employee_id,department_id,salary, rank() over(partition by department_id order by salary desc) rnk_over,
+dense_rank() over(partition by department_id order by salary desc) dens_rnk,
+row_number() over(partition by department_id order by salary desc) rownumber
+from employees)Harish
+where Harish.dens_rnk=1
+union
+select Harish.employee_ID,Harish.department_ID,Harish.salary,'min salary'as a from(select employee_id,department_id,salary, rank() over(partition by department_id order by salary asc) rnk_over,
+dense_rank() over(partition by department_id order by salary asc) dens_rnk,
+row_number() over(partition by department_id order by salary asc) rownumber
+from employees)Harish
+where Harish.dens_rnk=1
+
+select Harish.employee_ID,Harish.department_ID,Harish.salary,Harish.hire_date,'Last Joined'as a from(select employee_id,department_id,salary,hire_date, rank() over(partition by department_id order by hire_date desc) rnk_over,
+dense_rank() over(partition by department_id order by hire_date desc) dens_rnk,
+row_number() over(partition by department_id order by hire_date desc) rownumber
+from employees)Harish
+where Harish.dens_rnk=1
+union
+select Harish.employee_ID,Harish.department_ID,Harish.salary,Harish.hire_date,'First Joined'as a from(select employee_id,department_id,salary,hire_date, rank() over(partition by department_id order by hire_date asc) rnk_over,
+dense_rank() over(partition by department_id order by hire_date asc) dens_rnk,
+row_number() over(partition by department_id order by hire_date asc) rownumber
+from employees)Harish
+where Harish.dens_rnk=1
+
+
+Joins:
+types of joins-
+	inner join:It'll fetch only the matched records based on the column
+	outer join
+		left outer join: It'll fetch all records from 1st table
+		right outer join: It'll fetch all records from 2nd table
+		full outer join: It'll fetch all records from both tables
+	self join: We'll use only 1 table and join it with the table itself
+	cross join
+
+select * from employees;
+select * from departments;
+select * from locations;
+
+select a.*, b.department_name, b.location_id from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+
+select a.*, b.department_name, b.location_id, c.street_address from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+order by a.employee_id
+
+select a.*, b.department_name, b.location_id, c.street_address, d.region_id from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+inner join 
+countries d
+on c.country_id=d.country_id
+order by a.employee_id
+
+
+select a.*, b.department_name, b.location_id, c.street_address, d.region_id, e.region_name from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+inner join 
+countries d
+on c.country_id=d.country_id
+inner join
+regions e
+on d.region_id=e.region_id
+order by a.employee_id
+
+--outerjoin
+
+select a.*, b.department_name, b.location_id from employees a
+left join 
+departments b
+on a.department_id=b.department_id
+
+select a.*, b.department_name, b.location_id, c.street_address from employees a
+left join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+order by a.employee_id
+
+select a.*, b.department_name, b.location_id, c.street_address, d.region_id from employees a
+left join 
+departments b
+on a.department_id=b.department_id
+left join 
+locations c
+on b.location_id=c.location_id
+left join 
+countries d
+on c.country_id=d.country_id
+order by a.employee_id
+
+select a.*, b.department_name, b.location_id, c.street_address, d.region_id, e.region_name from employees a
+left join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+inner join 
+countries d
+on c.country_id=d.country_id
+inner join
+regions e
+on d.region_id=e.region_id
+order by a.employee_id
+
+--right outer join
+
+select a.*, b.department_name, b.location_id from employees a
+right join 
+departments b
+on a.department_id=b.department_id
+
+select a.*, b.department_name, b.location_id, c.street_address from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+order by a.employee_id
+
+select a.*, b.department_name, b.location_id, c.street_address, d.region_id from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+inner join 
+countries d
+on c.country_id=d.country_id
+order by a.employee_id
+
+
+select a.*, b.department_name, b.location_id, c.street_address, d.region_id, e.region_name from employees a
+inner join 
+departments b
+on a.department_id=b.department_id
+inner join 
+locations c
+on b.location_id=c.location_id
+inner join 
+countries d
+on c.country_id=d.country_id
+inner join
+regions e
+on d.region_id=e.region_id
+order by a.employee_id
+
+--self join(no join keyword used)
+
+select a.employee_id, a.first_name, a.last_name, a.manager_id, 
+b.first_name as manager_firstname, b.last_name as manager_lastname
+from employees a, employees b
+where a.manager_id=b.employee_id
+order by a.employee_id
+
+--cross join(no join keyword used)
+
+select * from employees a, employees b
+
+
+coalesce & NVL:
+
+	coalesce: allows you to replace null with more meaningfull value. The major difference between NVL & Coalesce is NVL will take only one column as input
+whereas Coalesce will take n number of input i.e it will take more than one column.
+
+create table coalesceExample
+(
+employee_id number(3),
+phone_number number(10),
+Office_number number(10),
+Home_number number(10)
+);
+
+
+insert into coalesceExample values(1,9884502,988554,558455);
+insert into coalesceExample (employee_id, phone_number) values(1,98845025);
+insert into coalesceExample (employee_id, office_number) values(2,9884);
+insert into coalesceExample (employee_id, Home_number) values(3,98841);
+
+select employee_id, phone_number,nvl(phone_number,0) from coalesceExample;
+
+select employee_id, phone_number,nvl(phone_number,office_number) from coalesceExample;
+select employee_id, phone_number,coalesce(phone_number,office_number,home_number) as finalnumber from coalesceExample;
+
+
+
+Query vs sub query vs correlated sub query
+
+1) Query - normal execution of query
+example
+select * from employees
+
+Select max(salary) from employees
+
+2) Sub Queries:
+
+In sub Queries always inner queries will be executed first and will be passed as input to the outer query.
+
+
+Select max(salary) from employees - 24,000
+
+select max(salary) from employees where salary not in (select max(salary) from employees) - 17,000       [to identify the second max salary]
+
+select max(salary) from employees where salary not in 
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees) - 14,000
+
+
+
+Select max(salary) from employees where salary not in
+(Select max(salary) from employees)
+and salary not in
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees where salary not in 
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees))
+
+
+select * from employees where salary =
+(Select max(salary) from employees where salary not in
+(Select max(salary) from employees)
+and salary not in
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees where salary not in 
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees)))
+
+
+3) Correlated sub query:
+
+In Correlated sub query outer query will be executed first and will be passed as input to the inner query.
+
+select department_id, avg(salary) from employees group by department_id
+
+
+select * from employees a where salary > (select avg(salary) from employees b where a.department_id=b.department_id)
+
+
+Different way of inserting a record into a table:
+
+select * from a
+desc a
+insert into a (column1,column2,column3) values (1,2,3);
+select * from a
+insert into a (column1,column3) values (1,3);
+select * from a
+insert into a values (4,5,6);
+select * from a
+insert into a (column3,column2,column1) values (7,8,9);
+select * from a
+select * from employees
+select employee_ID,first_name,phone_number,hire_date,commission_pct from employees;
+create table insertexample as select employee_ID,first_name,phone_number,hire_date,commission_pct from employees where 1=2;
+select * from insertexample
+desc insertexample
+insert into insertexample(employee_ID,first_name,phone_number,hire_date,commission_pct)
+values(123,'Harish','1234567890',to_date('20/07/2021','dd/mm/yyyy'),.25);
+select * from insertexample
+select employee_ID,first_name,phone_number,hire_date,commission_pct from employees where employee_ID>=150;
+insert into insertexample(employee_ID,first_name,phone_number,hire_date,commission_pct)
+select employee_ID,first_name,phone_number,hire_date,commission_pct from employees where employee_ID>=150;
+select * from insertexample;
+
+Delete:
+Delete is used to delete the records from the table
+
+delete from insertexample where employee_id=150;
+select * from insertexample
+delete from insertexample where commission_pct>=.35;
+select * from insertexample
+delete from insertexample where commission_pct is null;
+select * from insertexample
+delete from insertexample where employee_ID in (select employee_id from insertexample where commission_pct<=.2);
+select * from insertexample
+delete from insertexample
+select * from insertexample
+
+
+
+
+Update:
+
+insert into insertexample(employee_ID,first_name,phone_number,hire_date,commission_pct)
+values(123,'Harish','1234567890',to_date('20/07/2021','dd/mm/yyyy'),.25);
+insert into insertexample(employee_ID,first_name,phone_number,hire_date,commission_pct)
+values(103,'suriya','123456789',to_date('21/07/2021','dd/mm/yyyy'),.24);
+insert into insertexample(employee_ID,first_name,phone_number,hire_date,commission_pct)
+values(104,'Harish','1234567812',to_date('22/07/2021','dd/mm/yyyy'),.23);
+select * from insertexample;
+
+update insertexample
+set first_name='surya'
+where employee_id=104;
+
+select * from insertexample;
+
+update insertexample
+set first_name='surya';
+
+select * from insertexample;
+
+update insertexample
+set first_name='nithish',phone_number=98765432101
+where employee_id=104;
+
+select * from insertexample;
+
+update insertexample
+set first_name='nithish',phone_number=98765432101
+where employee_id in (select employee_id from insertexample where commission_pct>=0.24);
+select * from insertexample;
+
+Merge:
+	It is used to perform any 2 dml operations. It can be either insert or delete (insert or update).
+Syntax:
+merge into targettable using othertable on (joining criteria)
+when matched then update set columnlist
+when not matched then insert/update  
+
+
+
+create table catalog1 (id number(3), item varchar2 (20), price number(6));
+insert into catalog1 values(1, 'laptop', 800);
+insert into catalog1 values(2, 'iphone', 500);
+insert into catalog1 values(3, 'camera', 700);
+
+select * from catalog1;
+
+create table catalog2 (id number(3), item varchar2 (20), price number(6));
+
+insert into catalog2 values(1, 'laptop', 899);
+insert into catalog2 values(2, 'iphone', 599);
+insert into catalog2 values(5, 'video camera', 799);
+
+select * from catalog2;
+
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+WHEN NOT MATCHED THEN INSERT (id, item, price) values (s2.id, s2.item, s2.price);
+
+select * from catalog1;
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+delete where s1.id=s2.id;
+
+
+
+Views in oracle:
+An oracle view is  a virtual table tat doesn't physically exist other than it is created by a query  or join query 
+
+
+
+Syntax:
+create view viewname as 
+(select query)
+
+
+create view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+
+create table catalog1 (id number(3), item varchar2 (20), price number(6));
+insert into catalog1 values(1, 'laptop', 800);
+insert into catalog1 values(2, 'iphone', 500);
+insert into catalog1 values(3, 'camera', 700);
+select * from catalog1;
+create table catalog2 (id number(3), item varchar2 (20), price number(6));
+
+insert into catalog2 values(1, 'laptop', 899);
+insert into catalog2 values(2, 'iphone', 599);
+insert into catalog2 values(5, 'video camera', 799);
+
+select * from catalog2;
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+WHEN NOT MATCHED THEN INSERT (id, item, price) values (s2.id, s2.item, s2.price);
+
+select * from catalog1;
+select * from catalog2;
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+delete where s1.id=s2.id;
+select * from catalog1;
+select * from catalog2;
+
+merge into catalog2 s2 using catalog1 s1 on (s2.id=s1.id)
+when matched then update set s2.price=s1.price
+delete where s2.id=s1.id;
+
+select * from catalog2;
+select * from catalog1;
+
+Views:
+
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+
+create view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+select * from emp_dept_details;
+
+create  or replace view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id
+where a.department_id>50;
+
+select * from emp_dept_details;
+
+
+create  or replace view emp_dept_details_2
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id
+where a.department_id>50;
+
+select * from emp_dept_details_2;
+
+drop view emp_dept_details_2;
+
+
+
+DCL command: In order to give priviledge to the customer or to the user. We will be using DCL and we should have admin priviledge to execute.
+             how do login as admin
+                open a command prompt and type sqlplus / as sysdba
+             
+The commands under DCL are,
+1) Create user
+2) Grant user
+3) delete user
+
+
+Microsoft Windows [Version 10.0.19042.985]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\manik>sqlplus / as sysdba
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat May 15 10:41:58 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> select * from  dba_users;
+SQL> desc dba_users;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ USERNAME                                  NOT NULL VARCHAR2(30)
+ USER_ID                                   NOT NULL NUMBER
+ PASSWORD                                           VARCHAR2(30)
+ ACCOUNT_STATUS                            NOT NULL VARCHAR2(32)
+ LOCK_DATE                                          DATE
+ EXPIRY_DATE                                        DATE
+ DEFAULT_TABLESPACE                        NOT NULL VARCHAR2(30)
+ TEMPORARY_TABLESPACE                      NOT NULL VARCHAR2(30)
+ CREATED                                   NOT NULL DATE
+ PROFILE                                   NOT NULL VARCHAR2(30)
+ INITIAL_RSRC_CONSUMER_GROUP                        VARCHAR2(30)
+ EXTERNAL_NAME                                      VARCHAR2(4000)
+ PASSWORD_VERSIONS                                  VARCHAR2(8)
+ EDITIONS_ENABLED                                   VARCHAR2(1)
+ AUTHENTICATION_TYPE                                VARCHAR2(8)
+
+SQL> select username,password,account_status,created from dba_users;SQL> set pagesize 200;
+SQL> set linesize 200;
+SQL> select username,password,account_status,created from dba_users;
+
+USERNAME                       PASSWORD                       ACCOUNT_STATUS                   CREATED
+------------------------------ ------------------------------ -------------------------------- ---------
+SYS                                                           OPEN                             29-MAY-14
+SYSTEM                                                        OPEN                             29-MAY-14
+ANONYMOUS                                                     OPEN                             29-MAY-14
+HR                                                            OPEN                             29-MAY-14
+APEX_PUBLIC_USER                                              LOCKED                           29-MAY-14
+FLOWS_FILES                                                   LOCKED                           29-MAY-14
+APEX_040000                                                   LOCKED                           29-MAY-14
+OUTLN                                                         EXPIRED & LOCKED                 29-MAY-14
+DIP                                                           EXPIRED & LOCKED                 29-MAY-14
+ORACLE_OCM                                                    EXPIRED & LOCKED                 29-MAY-14
+XS$NULL                                                       EXPIRED & LOCKED                 29-MAY-14
+MDSYS                                                         EXPIRED & LOCKED                 29-MAY-14
+CTXSYS                                                        EXPIRED & LOCKED                 29-MAY-14
+DBSNMP                                                        EXPIRED & LOCKED                 29-MAY-14
+XDB                                                           EXPIRED & LOCKED                 29-MAY-14
+APPQOSSYS                                                     EXPIRED & LOCKED                 29-MAY-14
+
+16 rows selected.
+
+SQL> create user user_mani identified by hrd;
+
+User created.
+
+SQL> select username,password,account_status,created from dba_users;
+
+USERNAME                       PASSWORD                       ACCOUNT_STATUS                   CREATED
+------------------------------ ------------------------------ -------------------------------- ---------
+USER_MANI                                                     OPEN                             15-MAY-21
+SYS                                                           OPEN                             29-MAY-14
+SYSTEM                                                        OPEN                             29-MAY-14
+ANONYMOUS                                                     OPEN                             29-MAY-14
+HR                                                            OPEN                             29-MAY-14
+APEX_PUBLIC_USER                                              LOCKED                           29-MAY-14
+FLOWS_FILES                                                   LOCKED                           29-MAY-14
+APEX_040000                                                   LOCKED                           29-MAY-14
+OUTLN                                                         EXPIRED & LOCKED                 29-MAY-14
+DIP                                                           EXPIRED & LOCKED                 29-MAY-14
+ORACLE_OCM                                                    EXPIRED & LOCKED                 29-MAY-14
+XS$NULL                                                       EXPIRED & LOCKED                 29-MAY-14
+MDSYS                                                         EXPIRED & LOCKED                 29-MAY-14
+CTXSYS                                                        EXPIRED & LOCKED                 29-MAY-14
+DBSNMP                                                        EXPIRED & LOCKED                 29-MAY-14
+XDB                                                           EXPIRED & LOCKED                 29-MAY-14
+APPQOSSYS                                                     EXPIRED & LOCKED                 29-MAY-14
+
+17 rows selected.
+
+SQL> grant connect to user_mani;
+
+Grant succeeded.
+
+SQL> grant resource to user_mani;
+
+Grant succeeded.
+
+SQL> grant create session to user_mani;
+
+Grant succeeded.
+
+SQL> create user test_user identified by test;
+
+User created.
+
+SQL> delete user test_user;
+delete user test_user
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> drop user test_user;
+
+User dropped.
+
+SQL>
+
+----------------------------------------------------------------------------------------
+TCL: Transaction Control Language - Transaction either should complete or doesnt happen.
+
+The commands under TCL are:
+	Commit
+	rollback
+	savepoint
+
+SQL> create table tcl_eg(id number(3));
+
+Table created.
+
+SQL> insert into tcl_eg values(1);
+
+1 row created.
+
+SQL> insert into tcl_eg values(2);
+
+1 row created.
+
+SQL> insert into tcl_eg values(3);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update tcl_eg set id=5 where id-1;
+update tcl_eg set id=5 where id-1
+                                *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> update tcl_eg set id=5 where id=1;
+
+1 row updated.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+
+SQL> savepoint a;
+
+Savepoint created.
+
+SQL> insert into tcl_eg values(50);
+
+1 row created.
+
+SQL> savepoint b;
+
+Savepoint created.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+        50
+
+SQL> rollback to a;
+
+Rollback complete.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+
+SQL> rollback b;
+rollback b
+         *
+ERROR at line 1:
+ORA-02181: invalid option to ROLLBACK WORK
+
+
+SQL> rollback to b;
+rollback to b
+*
+ERROR at line 1:
+ORA-01086: savepoint 'B' never established in this session or is invalid
+
+
+SQL> insert into tcl_eg values(66;
+insert into tcl_eg values(66
+                           *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> insert into tcl_eg values(66);
+
+1 row created.
+
+SQL> savepoint b;
+
+Savepoint created.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+        66
+
+SQL> delete from tcl_rg where id=66;
+delete from tcl_rg where id=66
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> delete from tcl_eg where id=66;
+
+1 row deleted.
+
+SQL> savepoint c;
+
+Savepoint created.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+
+SQL> rollback to b;
+
+Rollback complete.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+        66
+
+SQL> ^ADisconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> insert into tcl_eg values(55);
+
+1 row created.
+
+SQL> savepoint c;
+
+Savepoint created.
+
+SQL> select * from tcl_Eg;
+
+        ID
+----------
+         2
+         3
+        55
+
+SQL> rollback to b;
+
+Rollback complete.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         2
+         3
+
+SQL> rollback to a;
+
+Rollback complete.
+
+SQL> select * from tcl_eg;
+
+        ID
+----------
+         5
+         2
+         3
+
+SQL> rollback to c;
+rollback to c
+*
+ERROR at line 1:
+ORA-01086: savepoint 'C' never established in this session or is invalid
+
+
+

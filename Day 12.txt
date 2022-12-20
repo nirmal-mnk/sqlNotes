@@ -1,0 +1,63 @@
+create table orders
+(
+Order_id number(3),
+Order_Number number(10),
+Order_date date DEFAULT sysDATE
+);
+
+insert into a1 
+(std_id, std_name, std_address, std_contact, std_DOB) values(898,'Ramu','Chennai','91-988554',To_date('30-08-1986','DD-MM-YYYY'));
+
+select * from employees where employee_id = (select max(employee_id) from employees);
+
+select * from employees order by hire_date
+
+select department_id, sum(salary) from employees group by department_id having sum(salary) > 50000;
+
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+select * from emp_details_view;
+
+create view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id;
+
+select * from emp_dept_details;
+
+delete from employees where employee_id = 206;
+
+create  or replace view emp_dept_details
+as
+select a.employee_id,a.first_name,a.last_name,a.salary,a.department_id,
+b.department_name,b.manager_id as departmentmanager
+from employees a 
+left join 
+departments b 
+on a.department_id=b.department_id
+where a.department_id>50;
+
+select employee_id, first_name, last_name from employees where First_name like '%n';
+
+select employee_id, first_name, last_name from employees where First_name like 'A%';
+
+select employee_id, first_name, last_name from employees where First_name like 'A%' AND Last_name like '%a';
+
+select employee_id, first_name, last_name from employees where First_name like 'A%' or Last_name like '%a';
+
+select * from emp_dept_details;
+
+select employee_id, first_name, last_name from employees where First_name like 'A__a%';
+
+select sysdate, current_timestamp from dual
+
+select dbtimezone from dual

@@ -1,0 +1,36 @@
+
+MERGE
+
+Using merge we can perform to DML Operation together.
+
+create table catalog1 (id number(3), item varchar2 (20), price number(6))
+insert into catalog1 values(1, 'laptop', 800)
+insert into catalog1 values(2, 'iphone', 500)
+insert into catalog1 values(3, 'camera', 700)
+
+select * from catalog1
+
+create table catalog2 (id number(3), item varchar2 (20), price number(6))
+
+insert into catalog2 values(1, 'laptop', 899)
+insert into catalog2 values(2, 'iphone', 599)
+insert into catalog2 values(5, 'video camera', 799)
+
+select * from catalog2
+
+MERGE INTO catalog1 s1 USING catalog2 s2 ON (s1.id = s2.id) 
+WHEN MATCHED THEN UPDATE SET s1.price = s2.price  
+WHEN NOT MATCHED THEN INSERT (id, item, price) values (s2.id, s2.item, s2.price)
+
+select * from catalog1
+
+syntax
+
+MERGE INTO catalog1 s1
+    USING cataalog2 s2
+    ON (s1.id = s2.id)
+  WHEN MATCHED THEN
+    UPDATE SET s1.price = s2.price
+  WHEN NOT MATCHED THEN
+    INSERT (id, item, price)
+    VALUES (s2.id, s2.item, s2.price);

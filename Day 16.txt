@@ -1,0 +1,71 @@
+SELECT e.ename AS employee_name,
+       dc1.dept_count AS emp_dept_count,
+       m.ename AS manager_name,
+       dc2.dept_count AS mgr_dept_count
+FROM emp e
+       JOIN (SELECT deptno, COUNT(*) AS dept_count
+             FROM emp
+             GROUP BY deptno) dc1
+         ON e.deptno = dc1.deptno
+       JOIN emp m ON e.mgr = m.empno
+       JOIN (SELECT deptno, COUNT(*) AS dept_count
+             FROM emp
+             GROUP BY deptno) dc2
+         ON m.deptno = dc2.deptno;
+         
+         
+SELECT deptno, COUNT(*) AS dept_count
+             FROM emp
+             GROUP BY deptno;
+             
+SELECT deptno, COUNT(*) AS dept_count
+             FROM emp
+             GROUP BY deptno
+             
+select * from emp where ename = 'BLAKE'
+
+7839  30  6 blake
+10 3 
+
+SELECT * FROM EMP WHERE empno = 7839
+
+
+create table training1
+(
+std_no number(2),
+std_name varchar2(20)
+);
+
+insert into training1 values(1,'Bharanidharan');
+
+insert into training1 values(2,'Ramesh');
+insert into training1 values(3,'Suresh');
+insert into training1 values(4,'Anand');
+insert into training1 values(5,'Ramu');
+
+select * from training1
+
+commit;
+
+savepoint a;
+
+select * from training1;
+
+insert into training1 values (6,'Ravi');
+
+savepoint b;
+
+delete from training1 where std_no <=3
+
+savepoint c;
+
+select * from training1;
+savepoint c;
+
+rollback to b;
+
+select * from training1;
+
+rollback to a;
+
+select * from training1;

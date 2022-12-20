@@ -1,0 +1,86 @@
+
+RANK
+
+Select employee_id, salary from employees;
+
+difffence between RANK, DENSE_RANK, ROW_Number
+
+RANK - if two persons are having same total, then following rank will be skipped
+
+DENSE_RANK - if two persons are having same total, then following rank will be in sequential order
+
+ROW_Number - its just a sequential number
+
+syntax;
+
+rank() over(partition by columnlist order by columnlist ASC/DESC)
+
+DENSE_rank() over(partition by columnlist order by columnlist ASC/DESC)
+
+ROW_NUMBER() over(partition by columnlist order by columnlist ASC/DESC)
+
+Partition by columnlist is optional
+
+
+Select employee_id, salary from employees;
+
+select max(salary) from employees;
+
+select max(salary) from employees where salary not in (select max(salary) from employees);
+
+select max(salary) from employees
+where salary not in (select max(salary) from employees)
+and salary not in (select max(salary) from employees where salary not in (select max(salary) from employees));
+
+select max(salary) from employees
+where salary not in (select max(salary) from employees)
+and salary not in (select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in (select max(salary) from employees
+where salary not in (select max(salary) from employees)
+and salary not in (select max(salary) from employees where salary not in (select max(salary) from employees)));
+
+select employee_id, salary from employees;
+
+select employee_id, salary,
+rank() over(order by salary desc) as rnk,
+dense_rank() over(order by salary desc) as drnk,
+row_number() over(order by salary desc) as rnrnk
+from employees;
+
+
+select employee_id, salary,
+rank() over(order by salary asc) as rnk,
+dense_rank() over(order by salary asc) as drnk,
+row_number() over(order by salary asc) as rnrnk
+from employees;
+
+select dc1.* from (select employee_id, salary,
+rank() over(order by salary desc) as rnk,
+dense_rank() over(order by salary desc) as drnk,
+row_number() over(order by salary desc) as rnrnk
+from employees) dc1
+where dc1.drnk = 5;
+
+
+select dc2.* from (select employee_id, salary, department_id,
+rank() over(partition by department_id order by salary desc) as rnk,
+dense_rank() over(partition by department_id order by salary desc) as drnk,
+row_number() over(partition by department_id order by salary desc) as rnrnk
+from employees) dc2
+where dc2.rnk =1;
+
+select * from employees;
+
+select dc2.* from (select employee_id, Hire_Date, department_id,
+rank() over(partition by department_id order by Hire_Date desc) as rnk,
+dense_rank() over(partition by department_id order by Hire_Date desc) as drnk,
+row_number() over(partition by department_id order by Hire_Date desc) as rnrnk
+from employees) dc2
+where dc2.rnk =1
+union
+select dc2.* from (select employee_id, Hire_Date, department_id,
+rank() over(partition by department_id order by Hire_Date asc) as rnk,
+dense_rank() over(partition by department_id order by Hire_Date asc) as drnk,
+row_number() over(partition by department_id order by Hire_Date asc) as rnrnk
+from employees) dc2
+where dc2.rnk =1;

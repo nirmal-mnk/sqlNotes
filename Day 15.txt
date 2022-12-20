@@ -1,0 +1,61 @@
+desc bharani1
+
+alter table bharani1 add (student_contact varchar2(20), student_address varchar2(30));
+
+alter table batch1 rename student_contact to std_cont;
+alter table bharani1 add (student_contact varchar2(20), student_address varchar2(30));
+
+select * from user_constraints where table_name = 'EMP';
+
+select * from user_constraints where table_name = 'BHARANI1';
+
+select * FROM EMPLOYEES WHERE SALARY = (SELECT max(salary) from employees);
+select * from user_constraints where table_name = 'BHARANI1';
+
+select employee_id, first_name, salary from employees order by salary desc;
+
+select * from batch1
+desc batch1
+
+delete from batch1;
+
+insert into batch1 (std_id) select employee_id from employees;
+
+
+SELECT e.ename AS employee_name,
+       e.deptno, dc.dept_count AS emp_dept_count
+FROM emp e,
+       (SELECT deptno, COUNT(*) AS dept_count
+        FROM emp
+        GROUP BY deptno) dc
+WHERE e.deptno = dc.deptno;
+
+SELECT * FROM EMP;
+
+
+SELECT deptno, COUNT(*) AS dept_count
+        FROM emp
+        GROUP BY deptno
+
+SELECT e.ename AS employee_name,
+        e.deptno,
+       dc.dept_count AS emp_dept_count
+FROM emp e
+       JOIN (SELECT deptno, COUNT(*) AS dept_count
+             FROM emp
+             GROUP BY deptno) dc
+         ON e.deptno = dc.deptno;
+         
+WITH dept_count AS (
+  SELECT deptno, COUNT(*) AS dept_count
+  FROM emp
+  GROUP BY deptno)
+select * from dept_count
+SELECT e.ename AS employee_name,
+       dc.dept_count AS emp_dept_count
+FROM emp e,
+       dept_count dc
+WHERE e.deptno = dc.deptno;
+
+
+

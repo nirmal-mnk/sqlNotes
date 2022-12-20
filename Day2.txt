@@ -1,0 +1,29 @@
+
+CREATE TABLE supplier
+( supplier_id numeric(10) NOT NULL,
+  supplier_name varchar2(50) NOT NULL,
+  contact_name varchar2(50),
+  CONSTRAINT supplier_unique UNIQUE (supplier_id)
+);
+
+PRIMARY KEY,
+FOREIGN KEY,
+CHECK,
+UNIQUE,
+DEFAULT
+
+CREATE TABLE suppliers
+(
+  supplier_id numeric(4),
+  supplier_name varchar2(50),
+  CONSTRAINT check_supplier_id
+  CHECK (supplier_id BETWEEN 100 and 9999)
+);
+
+create table class15
+ (
+std_id number(5) NOT NULL,
+std_name varchar2(30) NOT NULL,
+std_age number(2),
+std_address varchar2(40),
+std_marks DECIMAL(5,2) DEFAULT 100.00

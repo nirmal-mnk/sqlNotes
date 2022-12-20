@@ -1,0 +1,73 @@
+functions
+user defined created by user
+predefined it has two types
+single and (multi row functions or aggregate functions)
+aggregate :
+
+select max(salary),min(salary),avg(salary),count(salary),sum(salary),stddev(salary) from employees;
+
+select department_id, max(salary),min(salary),avg(salary),count(salary),sum(salary),stddev(salary) from employees group by department_id;
+
+Single row function (predefined)
+
+Note: for testing purpose using 'from dual;'
+
+string functions: 
+select employee_id, first_name,upper(first_name),lower(first_name),initcap(first_name)from employees;
+
+
+select employee_id,first_name,substr(first_name,2,3),instr(first_name,'a') from employees;
+
+Note: 
+Substr is like MID function in excel
+instr is like FIND function in excel
+
+select employee_id,first_name,last_name,concat(first_name,last_name) from employees;
+
+select employee_id,first_name,last_name,concat(first_name,concat('-', last_name)) from employees;
+
+
+
+select employee_id,salary, lpad(salary,10,'0'), rpad(salary,10,'0') from employees;
+
+
+select ltrim('   good   '),rtrim('  good  '), trim('   good   ') from dual;
+
+select employee_id,first_name,length(first_name) from employees;
+
+
+Numeric functions:
+absolute,floor
+select abs (-52),abs (620),abs (-982) from dual;
+
+select floor (-52.000),floor (620.0584),floor (-982.288) from dual;
+select ceil (-52.000),ceil (620.0584),ceil (-982.288) from dual;
+
+
+select trunc(12.8574,2), trunc(582.03255,2),trunc(58423.25884,3),trunc(58423.147,1) from dual;
+
+select round(12.8574,2), round(582.03255,2),round(58423.25884,3),round(58423.147,1) from dual;
+
+
+select round(12.8574,-2), round(582.03255,-2),round(58423.25884,-3),round(58423.147,-1) from dual;
+
+date functions:
+select sysdate, current_timestamp from dual;
+select extract(day from current_timestamp) from dual;
+
+
+select next_day(sysdate,'sunday') from dual;
+
+select employee_id, hire_date, last_day(hire_date) from employees;
+
+select hire_date,months_between(sysdate,hire_date) from employees;
+
+
+select hire_date,months_between(sysdate,hire_date)/12 from employees;
+
+
+
+
+
+
+

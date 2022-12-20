@@ -1,0 +1,60 @@
+
+DML
+
+Data Manipulatioin Language
+
+Insert
+update
+delete
+select
+
+1) Select - To select the record from the table
+
+select * from employees;
+select * from employees where employee_id > 150;
+select * from employees where employee_id > 150 and salary >12000;
+select employee_id, salary, first_name from employees where employee_id > 150 and salary >12000;
+
+select max(salary) from employees;
+select department_id from employees group by department_id;
+select department_id, max(salary) from employees group by department_id;
+select department_id, max(salary), min(salary), sum(salary), avg(salary),count(salary) from employees group by department_id;
+select count(*) from employees;
+select department_id, count(*) from employees group by department_id having count(*)>6;
+select employee_id, salary from employees order by salary;
+
+
+
+we can give only count, max, min, sum, avg, only in the having clause
+
+clause -- from, group by, having, where, select, order by.
+
+select * from tab;
+
+Note: desc mentioned for table is describle table and desc mentioned under select is descending.
+
+INSERT 
+
+insert into batch1 (std_id, subject, std_name, std_contact) values (12345,'SQL','Bharanidharan','91-999999');
+insert into batch1 values (123,'SQL1','Bharanidharan','91-999999');
+insert into batch1 (std_id, subject) values (124,'tabluve');
+insert into batch1 (subject, std_id, std_name, std_contact) values ('PowerBI',125,'Bharanidharan','91-999999');
+
+
+insert into batch1 select employee_id, first_name, last_name, phone_number from employees;
+Insert comand is used to insert a record into a table
+
+UPDATE
+To update a record in a table
+
+Update batch1 set std_name = 'xyz' where std_id = 12345;
+Update batch1 set std_name = 'abc', std_contact = '91-9255' where std_id = 23456;
+
+DELETE
+To delete record in the table
+
+delete from batch1 where std_id = 1;
+
+
+
+

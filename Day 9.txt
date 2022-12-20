@@ -1,0 +1,71 @@
+Query vs sub query vs correlated sub query
+
+1) Query - normal execution of query
+example
+select * from employees
+
+Select max(salary) from employees
+
+2) Sub Queries:
+
+In sub Queries always inner queries will be executed first and will be passed as input to the outer query.
+
+
+Select max(salary) from employees - 24,000
+
+select max(salary) from employees where salary not in (select max(salary) from employees) - 17,000
+
+select max(salary) from employees where salary not in 
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees) - 14,000
+
+
+
+Select max(salary) from employees where salary not in
+(Select max(salary) from employees)
+and salary not in
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees where salary not in 
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees))
+
+
+select * from employees where salary =
+(Select max(salary) from employees where salary not in
+(Select max(salary) from employees)
+and salary not in
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees where salary not in 
+(select max(salary) from employees where salary not in (select max(salary) from employees))
+and salary not in
+(select max(salary) from employees)))
+
+
+3) Correlated sub query:
+
+In Correlated sub query outer query will be executed first and will be passed as input to the inner query.
+
+select department_id, avg(salary) from employees group by department_id
+
+
+select * from employees a where salary > (select avg(salary) from employees b where a.department_id=b.department_id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

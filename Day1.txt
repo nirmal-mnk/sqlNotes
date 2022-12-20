@@ -1,0 +1,57 @@
+
+SQL
+
+Structured Query Language
+
+RETRIVE DATA FROM DATA BASE
+
+1) Syntex to retrive data from data base 
+
+Select * From
+
+2) Each sheet in excel file is a table
+
+Select * From 'sheet name'
+
+This will select all the list from the table in the respective sheet and display
+
+FILTER DATA
+
+1) Desc 'sheet name'
+
+This will show the header of the respective sheet.
+
+2) To filter the data
+
+less than (<)
+less than or equal to (<=)
+Greater than (>)
+Greater than (>=)
+not equal to (!=)
+
+example: select * from 'sheet name' where 'header name' > 10000
+
+3) To filter the blank (empty) lines
+
+IS NULL
+
+Select * from 'sheet name' where 'header name' is null
+
+4) AND
+
+When we filter two headers, then we use And
+for string (text) value we use single quote on either side of the word
+
+Select * From 'sheet name' where 'header name' = 'Respective Text' and Salary > 5000
+
+5) OR
+
+
+
+
+
+
+
+ 
+
+

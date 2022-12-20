@@ -1,0 +1,183 @@
+Operators:
+Arithmetical: to perform mathemeatical operations
+create table maths
+(
+num1 number(3),
+num2 number(3)
+);
+
+
+insert into maths
+values (15,12);
+
+
+insert into maths
+values (2,8);
+
+
+insert into maths
+values (31,7);
+
+
+
+select num1+num2 from maths;
+select num1-num2 from maths;
+select num1*num2 from maths;
+select num1/num2 from maths;
+
+select mod(num1, num2) from maths;
+modules - always leaves the remainder
+
+
+Comparison:
+select employee_id,salary,department_id from employees where department_id=50;
+
+select employee_id,salary,department_id from employees where department_id<>50;
+
+select employee_id,salary,department_id from employees where department_id!=50;
+
+select employee_id,salary,department_id from employees where department_id^=50;
+
+select employee_id,salary,department_id from employees where department_id>50;
+
+select employee_id,salary,department_id from employees where department_id>=50;
+
+select employee_id,salary,department_id from employees where department_id<=50;
+select employee_id,salary,department_id from employees where department_id<50;
+
+
+select employee_id,salary,department_id from employees where department_id in (50,60,70);
+
+select employee_id,salary,department_id from employees where department_id not in(50,60,70);
+select employee_id,salary,department_id from employees where department_id between 50 and 70;
+select employee_id,salary,department_id from employees where department_id not between 50 and 70;
+select employee_id,salary,department_id from employees where department_id>= all(100);
+select employee_id,salary,department_id from employees where department_id is null;
+select employee_id,salary,department_id from employees where department_id is not null;
+
+
+Character operator:
+select employee_id,first_name,last_name,first_name||'-'||last_name from employees;
+select employee_id,first_name,last_name,first_name||'-'||last_name||' and his managerid='||manager_id from employees;
+
+|| - pipe symbol which is used for concate
+
+Logical Operator:
+and  or not
+
+select * from employees where salary>10000 and commission_pct is not null;
+select * from employees where salary>10000 or commission_pct is null;
+select employee_id,salary,department_id from employees where department_id not between 50 and 70;
+select employee_id,salary,department_id from employees where department_id not in(50,60,70);
+
+
+Set Operators:
+union union all intersect minus
+union: returns all the distict row selected by either query
+union all returns all the selected rows by either query, includes all duplicates
+intersect returs all the distinct rows selected by both the queries
+minus returns all the distinct rows selected by the first query but not the second one
+syntax:
+query1 
+union/union all/intersect/minus
+query2
+points to remember
+in both query 1 and query2 no of columns should remains same
+and datatypes should match for all the columns
+create table a
+(
+column1 number(3),
+column2  number(3),
+column3  number(3)
+);
+
+
+
+create table b
+(
+column1 number(3),
+column2  number(3),
+column3  number(3)
+);
+
+
+insert into a values(1,2,3);
+insert into b values(1,2,3);
+insert into a values(1,2,4);
+insert into b values(1,2,7);
+insert into a values(2,2,7);
+insert into b values(2,3,7);
+insert into a values(17,2,5);
+
+
+select column1 from a
+union
+select column1 from b
+;
+
+
+select column1 from a
+union all
+select column1 from b
+;
+select column1 from a
+intersect
+select column1 from b
+;
+select column1 from a
+minus
+select column1 from b
+;
+
+
+
+
+select column1,column2 from a
+union
+select column1,column2 from b
+;
+
+
+select column1,column2 from a
+union all
+select column1,column2 from b
+;
+select column1,column2 from a
+intersect
+select column1,column2 from b
+;
+select column1,column2 from a
+minus
+select column1,column2 from b
+;
+
+select column1,column2 from b
+minus
+select column1,column2 from a
+;
+
+
+
+select column1,column2,column3 from a
+union
+select column1,column2,column3 from b
+;
+
+
+select column1,column2,column3 from a
+union all
+select column1,column2,column3 from b
+;
+select column1,column2,column3 from a
+intersect
+select column1,column2,column3 from b
+;
+select column1,column2,column3 from a
+minus
+select column1,column2,column3 from b
+;
+
+select column1,column2,column3 from b
+minus
+select column1,column2,column3 from a
+;

@@ -1,0 +1,130 @@
+case statement:
+syntax :case when expression then result  
+when  expression then result 
+when  expression then result 
+
+when  expression then result 
+
+else result 
+
+
+end
+
+select employee_id, department_id,salary,
+case when department_id=10 then salary+(salary*0.5)
+when department_id=20 then salary+(salary*0.25)
+when department_id=30 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end as newsalary
+from employees;
+
+
+select employee_id, department_id,salary,
+case when department_id between 10 and 50 then salary+(salary*0.5)
+when department_id between 51 and 80 then salary+(salary*0.25)
+when department_id between 81 and 100 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end as newsalary
+from employees;
+
+
+select employee_id, department_id,salary,
+case when department_id =10 then salary+(salary*0.5)
+when department_id between 11 and 80 then salary+(salary*0.25)
+when department_id between 81 and 100 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end as newsalary
+from employees;
+
+
+select employee_id, department_id,salary,
+case when employee_id between 100 and 110 then salary+(salary*0.5)
+when employee_id between 111 and 120 then salary+(salary*0.25)
+when employee_id between 121 and 130 then salary+(salary*0.15)
+else salary+(salary*0.10)
+end
+from employees;
+
+
+
+nested case statements:case inside case
+select employee_id,department_id,job_id, salary, 
+case when department_id=90 then 
+        case when job_id='AD_PRES' then salary+(salary*0.5)
+        when job_id='AD_VP' then salary+(salary*0.25)
+        else salary+(salary*0.10)
+        end 
+    when department_id=100 then
+        case when job_id='FI_MGR' then salary+(salary*0.5)
+        when job_id='FI_ACCOUNT' then salary+(salary*0.25)
+        else salary+(salary*0.20)
+        end
+    when department_id=30 then
+         case when job_id='PU_MAN' then salary+(salary*0.5)
+         when job_id='PU_CLERK' then salary+(salary*0.25)
+         else salary+(salary*0.30)
+         end
+else salary+(salary*0.20)
+end as newsalary
+from employees;
+
+
+
+
+select employee_id,department_id,job_id, salary, 
+case when department_id=90 then 
+    case when job_id='AD_PRES' then salary+(salary*0.5)
+        when job_id='AD_VP' then salary+(salary*0.25)
+        else salary+(salary*0.10)
+        end 
+    when department_id=100 then
+        case when job_id='FI_MGR' then salary+(salary*0.5)
+        when job_id='FI_ACCOUNT' then salary+(salary*0.25)
+        else salary+(salary*0.20)
+        end
+    when department_id=30 then
+         case when job_id='PU_MAN' then salary+(salary*0.5)
+         when job_id='PU_CLERK' then salary+(salary*0.25)
+         else salary+(salary*0.30)
+         end
+else salary+(salary*0.20)
+end as newsalary
+from employees where department_id in (90,100,30);
+
+
+
+NVL:allows you to replace null with more meaningfull value.
+Select employee_id,commission_pct,nvl(commission_pct,0) from employees;
+
+
+coalesce: allows you to replace null with more meaningfull value. The major difference between NVL & Coalesce is 
+NVL will take only one column as input
+whereas Coalesce will take n number of input i.e it will take more than one column.
+
+create table coalesceExample
+(
+employee_id number(3),
+phone_number number(10),
+Office_number number(10),
+Home_number number(10)
+);
+
+insert into coalesceExample values(1,9884502,988554,558455);
+insert into coalesceExample (employee_id, phone_number) values(1,98845025);
+insert into coalesceExample (employee_id, office_number) values(2,9884);
+insert into coalesceExample (employee_id, Home_number) values(3,98841);
+
+select employee_id, phone_number,nvl(phone_number,0) from coalesceExample;
+
+select employee_id, phone_number,nvl(phone_number,office_number) from coalesceExample;
+
+select employee_id, phone_number,coalesce(phone_number,office_number,home_number) as finalnumber from coalesceExample;
+
+
+select employee_id, phone_number, office_number, home_number, coalesce(phone_number,office_number,home_number) as finalnumber from coalesceExample;
+
+
+
+
+
+
